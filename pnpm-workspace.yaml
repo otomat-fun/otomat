@@ -1,0 +1,5 @@
+packages:
+  - "sdk"
+  - "middleware"
+  - "payment-channel"
+  - "agent-wallet-kit"

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@otomat/sdk": ["sdk/src/index.ts"],
+      "@otomat/sdk/*": ["sdk/src/*"],
+      "@otomat/middleware": ["middleware/src/index.ts"],
+      "@otomat/middleware/*": ["middleware/src/*"],
+      "@otomat/payment-channel": ["payment-channel/src/index.ts"],
+      "@otomat/agent-wallet-kit": ["agent-wallet-kit/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next", "target"]
+}

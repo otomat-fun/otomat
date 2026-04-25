@@ -1,0 +1,35 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.turbo/
+target/
+out/
+*.tsbuildinfo
+
+# anchor / solana
+.anchor/
+test-ledger/
+**/target/deploy/*-keypair.json
+**/*.so
+
+# env
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# editors / os
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# misc
+.pnpm-store/
+coverage/
