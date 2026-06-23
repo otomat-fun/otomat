@@ -1,0 +1,23 @@
+{
+  "name": "@otomat/agent-wallet-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@otomat/sdk": "workspace:*",
+    "@solana/web3.js": "^1.98.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.5.0",
+    "vitest": "^2.1.8"
+  }
+}
