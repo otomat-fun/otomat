@@ -28,7 +28,7 @@
     "bs58": "^6.0.0",
     "cross-fetch": "^4.1.0",
     "tweetnacl": "^1.0.3",
-    "zod": "^3.24.1"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",
