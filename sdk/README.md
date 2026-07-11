@@ -11,7 +11,7 @@ import { OtomatClient } from '@otomat/sdk';
 import { Connection, Keypair } from '@solana/web3.js';
 
 const client = new OtomatClient({
-  facilitatorUrl: 'https://facilitator.otomat.fi',
+  facilitatorUrl: 'https://facilitator.otomat.fun',
   payer: Keypair.generate(),
   connection: new Connection('https://api.mainnet-beta.solana.com'),
 });
@@ -50,7 +50,7 @@ paidTool(server, {
   name: 'premium_query',
   price: '$0.002',
   payTo: OTOMAT_TREASURY,
-  facilitatorUrl: 'https://facilitator.otomat.fi',
+  facilitatorUrl: 'https://facilitator.otomat.fun',
   schema: z.object({ query: z.string() }),
   handler: async ({ query }) => ({ content: [{ type: 'text', text: run(query) }] }),
 });

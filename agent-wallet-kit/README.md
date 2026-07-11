@@ -13,14 +13,14 @@ import { Keypair } from '@solana/web3.js';
 
 const wallet = new AgentWallet({
   keypair: Keypair.generate(),
-  facilitatorUrl: 'https://facilitator.otomat.fi',
+  facilitatorUrl: 'https://facilitator.otomat.fun',
   policy: composePolicies(
     BudgetPolicy({ maxTotal: 5_000_000n, maxPerCall: 50_000n }),
-    WhitelistPolicy({ allowedDomains: ['api.otomat.fi'] }),
+    WhitelistPolicy({ allowedDomains: ['api.otomat.fun'] }),
   ),
 });
 
-const response = await wallet.fetch('https://api.otomat.fi/premium');
+const response = await wallet.fetch('https://api.otomat.fun/premium');
 console.log(wallet.getSpent()); // { total, byAsset }
 ```
 

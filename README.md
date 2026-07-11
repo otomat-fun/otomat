@@ -132,7 +132,7 @@ import { OtomatClient } from '@otomat/sdk';
 import { Connection, Keypair } from '@solana/web3.js';
 
 const client = new OtomatClient({
-  facilitatorUrl: 'https://facilitator.otomat.fi',
+  facilitatorUrl: 'https://facilitator.otomat.fun',
   payer: Keypair.generate(),
   connection: new Connection('https://api.devnet.solana.com'),
 });

@@ -80,7 +80,7 @@ otomat.express({ price: { amount: '2000', decimals: 6 }, payTo });
 | `payTo`             | `string` (Solana pubkey)                         | required (or `OTOMAT_PAY_TO` env) |
 | `asset`             | `'USDC' \| 'SOL' \| mint`                        | `'USDC'`                         |
 | `network`           | `'solana:mainnet' \| 'solana:devnet' \| CAIP-2`  | `'solana:mainnet'`               |
-| `facilitatorUrl`    | `string`                                         | `https://facilitator.otomat.fi`  |
+| `facilitatorUrl`    | `string`                                         | `https://facilitator.otomat.fun`  |
 | `scheme`            | `'exact' \| 'otomat-channel' \| string`          | `'exact'`                        |
 | `maxTimeoutSeconds` | `number`                                         | `60`                             |
 | `feePayer`          | `string`                                         | fetched from `/supported`        |

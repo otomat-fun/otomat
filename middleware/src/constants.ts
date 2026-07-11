@@ -10,7 +10,7 @@ export const USDC_MINT_MAINNET = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 export const USDC_MINT_DEVNET = '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU';
 export const WRAPPED_SOL_MINT = 'So11111111111111111111111111111111111111112';
 
-export const DEFAULT_FACILITATOR_URL = 'https://facilitator.otomat.fi';
+export const DEFAULT_FACILITATOR_URL = 'https://facilitator.otomat.fun';
 export const DEFAULT_MAX_TIMEOUT_SECONDS = 60;
 export const DEFAULT_X402_VERSION = 2 as const;
 

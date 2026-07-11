@@ -16,7 +16,7 @@ export interface OtomatConfig {
   network?: 'solana:mainnet' | 'solana:devnet' | string;
   /** Payee Solana pubkey. Required (or set the OTOMAT_PAY_TO env var). */
   payTo?: string;
-  /** Facilitator base URL. Defaults to https://facilitator.otomat.fi. */
+  /** Facilitator base URL. Defaults to https://facilitator.otomat.fun. */
   facilitatorUrl?: string;
   scheme?: 'exact' | 'otomat-channel' | string;
   maxTimeoutSeconds?: number;
