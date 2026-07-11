@@ -11,6 +11,7 @@
 <p>
   <a href="https://otomat.fun"><img src="https://img.shields.io/badge/website-otomat.fun-C79A4B?style=flat-square" alt="Website" /></a>
   <a href="./docs"><img src="https://img.shields.io/badge/docs-architecture-C79A4B?style=flat-square" alt="Docs" /></a>
+  <a href="https://x.com/otomat_rail"><img src="https://img.shields.io/badge/X-@otomat__rail-1C1A17?style=flat-square&logo=x" alt="X" /></a>
   <a href="https://github.com/otomat-fun/otomat/actions"><img src="https://img.shields.io/github/actions/workflow/status/otomat-fun/otomat/ci.yml?branch=main&style=flat-square" alt="Build" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/otomat-fun/otomat?style=flat-square" alt="License" /></a>
   <br />
