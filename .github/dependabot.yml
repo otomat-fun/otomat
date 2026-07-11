@@ -3,19 +3,35 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
     open-pull-requests-limit: 5
     groups:
       npm-development:
         dependency-type: development
+    ignore:
+      # The TypeScript Anchor client tracks the deployed program's Anchor version.
+      - dependency-name: "@coral-xyz/anchor"
+      # Major bumps are reviewed and applied by hand.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: cargo
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
     open-pull-requests-limit: 5
+    ignore:
+      # Anchor crates are pinned to the on-chain program version, not latest.
+      - dependency-name: "anchor-lang"
+      - dependency-name: "anchor-spl"
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
+    ignore:
+      # Action majors are bumped deliberately, not automatically.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
