@@ -1,0 +1,14 @@
+# Normalize line endings: LF in the repository, auto-detect on checkin.
+* text=auto eol=lf
+
+# Keep shell scripts LF even on Windows checkouts.
+*.sh text eol=lf
+
+# Binary assets are never normalized or diffed as text.
+*.png binary
+*.jpg binary
+*.ico binary
+
+# Generated and vendored files: collapse in diffs, exclude from language stats.
+pnpm-lock.yaml linguist-generated=true
+Cargo.lock linguist-generated=true
