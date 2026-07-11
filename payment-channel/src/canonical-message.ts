@@ -1,7 +1,12 @@
 import type BN from 'bn.js';
+import { PublicKey } from '@solana/web3.js';
 
-/** Domain prefix for every canonical check message. */
-export const CHECK_MESSAGE_PREFIX = 'otomat/v2/check';
+/**
+ * Domain prefix for every canonical check message. Identical to the on-chain
+ * constant `CHECK_MESSAGE_PREFIX = b"otomat/v2/check|"` (16 bytes, trailing '|'
+ * included).
+ */
+export const CHECK_MESSAGE_PREFIX = 'otomat/v2/check|';
 
 export type Numeric = BN | bigint | number;
 
@@ -57,20 +62,25 @@ export interface CanonicalCheckInput {
 }
 
 /**
- * Build the canonical check string:
- *   otomat/v2/check|{channelPda}|{cumulative_le_hex}|{nonce_le_hex}|{expiry_le_hex}
+ * Canonical check message the payer Ed25519-signs and the on-chain program
+ * reconstructs byte-for-byte in build_check_message:
+ *   "otomat/v2/check|" (16B) || channelPda raw (32B)
+ *     || cumulative u64 LE (8B) || nonce u64 LE (8B) || expiry i64 LE (8B)  = 72B
+ * No separators between binary fields; the channel is the raw 32-byte public
+ * key, NOT its base58 string.
  */
-export function buildCanonicalCheckString(input: CanonicalCheckInput): string {
-  return [
-    CHECK_MESSAGE_PREFIX,
-    input.channelPda,
-    u64ToLeHex(input.cumulativeAmount),
-    u64ToLeHex(input.nonce),
-    i64ToLeHex(input.expiry),
-  ].join('|');
-}
-
-/** UTF-8 bytes of the canonical check string; this is what gets Ed25519-signed. */
 export function buildCanonicalCheckMessage(input: CanonicalCheckInput): Uint8Array {
-  return new TextEncoder().encode(buildCanonicalCheckString(input));
+  const prefix = new TextEncoder().encode(CHECK_MESSAGE_PREFIX);
+  const channel = new PublicKey(input.channelPda).toBytes();
+  const cumulative = u64ToLeBytes(input.cumulativeAmount);
+  const nonce = u64ToLeBytes(input.nonce);
+  const expiry = i64ToLeBytes(input.expiry);
+  const out = new Uint8Array(prefix.length + channel.length + 24);
+  let offset = 0;
+  out.set(prefix, offset); offset += prefix.length;
+  out.set(channel, offset); offset += channel.length;
+  out.set(cumulative, offset); offset += 8;
+  out.set(nonce, offset); offset += 8;
+  out.set(expiry, offset);
+  return out;
 }

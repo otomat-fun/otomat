@@ -2,7 +2,6 @@ export { ChannelClient } from './channel-client.js';
 
 export {
   CHECK_MESSAGE_PREFIX,
-  buildCanonicalCheckString,
   buildCanonicalCheckMessage,
   u64ToLeBytes,
   i64ToLeBytes,
