@@ -29,6 +29,9 @@ pnpm-debug.log*
 .vscode/
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
 
 # misc
 .pnpm-store/
