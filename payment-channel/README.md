@@ -1,5 +1,10 @@
 # @otomat/payment-channel
 
+[![npm](https://img.shields.io/npm/v/@otomat/payment-channel)](https://www.npmjs.com/package/@otomat/payment-channel)
+[![license](https://img.shields.io/npm/l/@otomat/payment-channel)](https://github.com/otomat-fun/otomat/blob/main/LICENSE)
+[![site](https://img.shields.io/badge/site-otomat.fun-6c5ce7)](https://otomat.fun)
+[![github](https://img.shields.io/badge/github-otomat--fun%2Fotomat-181717?logo=github)](https://github.com/otomat-fun/otomat)
+
 Off-chain signed payment channels with on-chain batch settlement for the Otomat
 x402 rail. A channel lets an agent authorize many micropayments to one payee by
 signing cumulative off-chain "checks", then settling the final amount on chain in
@@ -17,21 +22,30 @@ a single close.
 
 ## Canonical check message
 
-Each check is signed over a fixed 72-byte binary message, which the on-chain
-program rebuilds byte for byte in `build_check_message`:
+The bytes that get signed are a fixed 72-byte binary message, not a delimited
+string. `buildCanonicalCheckMessage` produces exactly these bytes and the
+on-chain program reconstructs them byte-for-byte:
 
 ```
-"otomat/v2/check|" (16 bytes, trailing pipe included)
-|| channel pubkey    (raw 32 bytes)
-|| cumulative amount (u64 LE, 8 bytes)
-|| nonce             (u64 LE, 8 bytes)
-|| expiry            (i64 LE, 8 bytes)
-= 72 bytes, no separators between fields
+"otomat/v2/check|"   16 bytes  domain prefix (the trailing '|' is part of it)
+channelPda           32 bytes  the channel public key as raw bytes, not base58
+cumulativeAmount      8 bytes  u64, little-endian
+nonce                 8 bytes  u64, little-endian
+expiry                8 bytes  i64, little-endian
+                     --------
+                     72 bytes  concatenated, no separators between fields
 ```
 
-The channel is its raw 32-byte public key, not a base58 string.
-`buildCanonicalCheckMessage` produces these exact bytes, and `@otomat/sdk` signs
-the same layout.
+There is only one separator character, the `|` inside the prefix; the binary
+fields are packed back to back. `@otomat/sdk` signs this same layout. The
+`u64ToLeHex` / `i64ToLeHex` helpers render individual fields as hex for
+inspection and are not used to assemble the message.
+
+## Install
+
+```bash
+npm i @otomat/payment-channel
+```
 
 ## Usage
 
@@ -77,3 +91,18 @@ await client.close(channel, check);
 
 - `pnpm build` - compile with `tsc`.
 - `pnpm test` - run the vitest suite.
+
+## Related packages
+
+- [`@otomat/sdk`](https://www.npmjs.com/package/@otomat/sdk) - x402 client, payload builders, and MCP adapter. Builds `otomat-channel` payloads from checks signed here.
+- [`@otomat/middleware`](https://www.npmjs.com/package/@otomat/middleware) - sell any endpoint behind an x402 paywall.
+- [`@otomat/agent-wallet-kit`](https://www.npmjs.com/package/@otomat/agent-wallet-kit) - spend-policy layer for agent wallets.
+- [`otomat-cli`](https://www.npmjs.com/package/otomat-cli) - open, inspect, and settle channels from the command line.
+
+## Status
+
+Open source and running on Solana devnet; mainnet is next. The temporary on-chain program interface is isolated so it can be swapped for the generated IDL once the program build lands.
+
+## License
+
+MIT

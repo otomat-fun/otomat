@@ -1,5 +1,10 @@
 # @otomat/middleware
 
+[![npm](https://img.shields.io/npm/v/@otomat/middleware)](https://www.npmjs.com/package/@otomat/middleware)
+[![license](https://img.shields.io/npm/l/@otomat/middleware)](https://github.com/otomat-fun/otomat/blob/main/LICENSE)
+[![site](https://img.shields.io/badge/site-otomat.fun-6c5ce7)](https://otomat.fun)
+[![github](https://img.shields.io/badge/github-otomat--fun%2Fotomat-181717?logo=github)](https://github.com/otomat-fun/otomat)
+
 One line turns any endpoint into a paid x402 API. Drop `otomat.express`, `otomat.next`,
 or `otomat.hono` in front of a handler and every call negotiates a Solana micropayment
 over HTTP 402 before your resource runs.
@@ -120,6 +125,17 @@ const decision = await evaluatePayment(resolved, {
 });
 // decision.outcome: 'require' | 'invalid' | 'proceed' | 'error'
 ```
+
+## Related packages
+
+- [`@otomat/sdk`](https://www.npmjs.com/package/@otomat/sdk) - the client side; pay 402 challenges and add pay-per-call to MCP tools.
+- [`@otomat/payment-channel`](https://www.npmjs.com/package/@otomat/payment-channel) - back the `otomat-channel` scheme with signed off-chain checks.
+- [`@otomat/agent-wallet-kit`](https://www.npmjs.com/package/@otomat/agent-wallet-kit) - spend-policy layer for agent wallets.
+- [`otomat-cli`](https://www.npmjs.com/package/otomat-cli) - `otomat serve` and `otomat monetize` wrap this middleware from the command line.
+
+## Status
+
+Open source and running on Solana devnet; mainnet is next.
 
 ## License
 

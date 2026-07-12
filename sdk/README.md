@@ -1,8 +1,19 @@
 # @otomat/sdk
 
+[![npm](https://img.shields.io/npm/v/@otomat/sdk)](https://www.npmjs.com/package/@otomat/sdk)
+[![license](https://img.shields.io/npm/l/@otomat/sdk)](https://github.com/otomat-fun/otomat/blob/main/LICENSE)
+[![site](https://img.shields.io/badge/site-otomat.fun-6c5ce7)](https://otomat.fun)
+[![github](https://img.shields.io/badge/github-otomat--fun%2Fotomat-181717?logo=github)](https://github.com/otomat-fun/otomat)
+
 TypeScript SDK for the Otomat x402 payment rail on Solana. It builds x402 v2
 payment payloads, drives the 402 challenge/response flow over `fetch`, and adapts
 MCP tools for per-call payment.
+
+## Install
+
+```bash
+npm i @otomat/sdk
+```
 
 ## Low-level client
 
@@ -77,6 +88,21 @@ A tool call with no payment returns a PAYMENT-REQUIRED result carried in `_meta`
 - `zod`
 - `tweetnacl`
 - `bs58`
+
+## Related packages
+
+- [`@otomat/payment-channel`](https://www.npmjs.com/package/@otomat/payment-channel) - sign the checks that `buildChannelPayload` turns into `otomat-channel` payloads.
+- [`@otomat/middleware`](https://www.npmjs.com/package/@otomat/middleware) - the server side; sell any endpoint behind an x402 paywall.
+- [`@otomat/agent-wallet-kit`](https://www.npmjs.com/package/@otomat/agent-wallet-kit) - wraps this SDK with a declarative spend policy for agent wallets.
+- [`otomat-cli`](https://www.npmjs.com/package/otomat-cli) - pay, serve, and manage channels from the terminal.
+
+## Status
+
+Open source and running on Solana devnet; mainnet is next.
+
+## License
+
+MIT
 
 ## Scripts
 
