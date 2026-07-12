@@ -104,16 +104,17 @@ Accumulates off-chain payer-signed checks and settles the last one on-chain.
 
 ### Canonical check message
 
-The signed bytes are the concatenation below, matching the on-chain program byte
-for byte:
+The signed bytes are a fixed 72-byte concatenation, matching the on-chain program
+byte for byte:
 
 ```
-utf8("otomat/v2/check") | utf8(channelPda) | u64LE(cumulativeAmount) | u64LE(nonce) | i64LE(expiry)
+"otomat/v2/check|" (16B) || channel_pda (32B) || cumulative_le (8B) || nonce_le (8B) || expiry_le (8B)
 ```
 
-The domain tag, PDA, and `|` separator are UTF-8; the three numbers are 8-byte
-little-endian. Verification uses `nacl.sign.detached.verify(message, signature,
-channel.payer)`.
+The 16-byte domain prefix includes its trailing `|`; the channel PDA is its raw
+32-byte public key, not a base58 string; the three numbers are 8-byte
+little-endian (`expiry` signed). No separators sit between the binary fields.
+Verification uses `nacl.sign.detached.verify(message, signature, channel.payer)`.
 
 ### Off-chain state checks
 

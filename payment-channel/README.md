@@ -17,15 +17,21 @@ a single close.
 
 ## Canonical check message
 
-The bytes that get signed are the UTF-8 encoding of:
+Each check is signed over a fixed 72-byte binary message, which the on-chain
+program rebuilds byte for byte in `build_check_message`:
 
 ```
-otomat/v2/check|{channelPda_base58}|{cumulativeAmount_le_hex}|{nonce_le_hex}|{expiry_le_hex}
+"otomat/v2/check|" (16 bytes, trailing pipe included)
+|| channel pubkey    (raw 32 bytes)
+|| cumulative amount (u64 LE, 8 bytes)
+|| nonce             (u64 LE, 8 bytes)
+|| expiry            (i64 LE, 8 bytes)
+= 72 bytes, no separators between fields
 ```
 
-where each numeric field is its 64-bit little-endian byte serialization rendered
-as lowercase hex. This is the exact format the on-chain program verifies and the
-same format used by `@otomat/sdk`.
+The channel is its raw 32-byte public key, not a base58 string.
+`buildCanonicalCheckMessage` produces these exact bytes, and `@otomat/sdk` signs
+the same layout.
 
 ## Usage
 
@@ -48,7 +54,9 @@ await client.close(channel, check);
 ## API
 
 - `ChannelClient` - `open`, `signCheck`, `close`, `dispute`, `timeoutReclaim`.
-- `buildCanonicalCheckMessage`, `buildCanonicalCheckString`, `u64ToLeHex`, `i64ToLeHex`.
+- `buildCanonicalCheckMessage` and `CHECK_MESSAGE_PREFIX`, plus the field
+  serializers `u64ToLeBytes` / `i64ToLeBytes` and their hex variants
+  `u64ToLeHex` / `i64ToLeHex`.
 - `anchor-io` instruction builders: `buildOpenChannelIx`, `buildCloseChannelIx`,
   `buildDisputeChannelIx`, `buildTimeoutReclaimIx`, `buildEd25519VerifyIx`,
   `deriveChannelPda`.
