@@ -1,7 +1,7 @@
 # @otomat/agent-wallet-kit
 
 A budget-and-whitelist spend policy layer over an agent's Solana key. It wraps
-`fetch`, transparently pays x402 402 challenges through `@otomat/sdk`, and
+`fetch`, transparently pays 402 challenges through `@otomat/sdk`, and
 enforces a declarative spend policy before every payment. Violations throw
 before any money moves.
 
