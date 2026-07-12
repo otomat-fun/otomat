@@ -80,20 +80,20 @@ otomat/
 %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0E3B3A', 'primaryTextColor': '#F3EFE6', 'primaryBorderColor': '#C79A4B', 'lineColor': '#E8B04B', 'secondaryColor': '#1C1A17', 'tertiaryColor': '#8C9196' }}}%%
 flowchart LR
     subgraph Client
-      A[Agent / app] --> SDK[@otomat/sdk]
-      SDK --> AWK[agent-wallet-kit\nspend policy]
+      A["Agent / app"] --> SDK["@otomat/sdk"]
+      SDK --> AWK["agent-wallet-kit<br/>spend policy"]
     end
     subgraph Server
-      MW[@otomat/middleware\notomat price] --> RS[Your endpoint]
+      MW["@otomat/middleware<br/>otomat price"] --> RS["Your endpoint"]
     end
     subgraph Rail
-      FAC[Facilitator\nverify / settle]
-      PRG[otomat-rail\nAnchor program]
+      FAC["Facilitator<br/>verify / settle"]
+      PRG["otomat-rail<br/>Anchor program"]
     end
-    SDK -->|402 -> PAYMENT-SIGNATURE| MW
-    MW -->|verify / settle| FAC
-    FAC -->|exact tx / close_channel| PRG
-    PRG -->|escrow settlement| SOL[(Solana)]
+    SDK -->|"402 -> PAYMENT-SIGNATURE"| MW
+    MW -->|"verify / settle"| FAC
+    FAC -->|"exact tx / close_channel"| PRG
+    PRG -->|"escrow settlement"| SOL[("Solana")]
 ```
 
 ## Quick start
