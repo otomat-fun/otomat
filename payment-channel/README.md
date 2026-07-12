@@ -101,7 +101,7 @@ await client.close(channel, check);
 
 ## Status
 
-Open source and running on Solana devnet; mainnet is next. The temporary on-chain program interface is isolated so it can be swapped for the generated IDL once the program build lands.
+The settlement program is deployed to Solana mainnet-beta; the public interactive demos run on devnet.
 
 ## License
 

@@ -135,7 +135,7 @@ const decision = await evaluatePayment(resolved, {
 
 ## Status
 
-Open source and running on Solana devnet; mainnet is next.
+The settlement program is deployed to Solana mainnet-beta; the public interactive demos run on devnet.
 
 ## License
 

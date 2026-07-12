@@ -1,6 +1,6 @@
 {
   "name": "@otomat/payment-channel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Off-chain signed Solana payment channels with on-chain batch settlement for the Otomat x402 rail.",
   "license": "MIT",
   "author": "Otomat",

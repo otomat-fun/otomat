@@ -1,6 +1,6 @@
 {
   "name": "@otomat/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript SDK for the Otomat x402 micropayment rail on Solana: build payloads, drive the HTTP 402 flow, and add pay-per-call to MCP tools.",
   "license": "MIT",
   "author": "Otomat",

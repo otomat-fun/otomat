@@ -98,7 +98,7 @@ A tool call with no payment returns a PAYMENT-REQUIRED result carried in `_meta`
 
 ## Status
 
-Open source and running on Solana devnet; mainnet is next.
+The settlement program is deployed to Solana mainnet-beta; the public interactive demos run on devnet.
 
 ## License
 

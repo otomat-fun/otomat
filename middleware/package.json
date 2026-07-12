@@ -1,6 +1,6 @@
 {
   "name": "@otomat/middleware",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "One line turns any Express, Next.js, or Hono endpoint into a paid x402 API settled in USDC on Solana.",
   "license": "MIT",
   "author": "Otomat",

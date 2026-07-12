@@ -1,6 +1,6 @@
 {
   "name": "@otomat/agent-wallet-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Budget and whitelist spend-policy layer over an agent's Solana wallet for x402 micropayments.",
   "license": "MIT",
   "author": "Otomat",
