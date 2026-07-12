@@ -17,7 +17,7 @@
   <a href="https://github.com/otomat-fun/otomat/commits/main"><img src="https://img.shields.io/github/last-commit/otomat-fun/otomat?style=flat-square" alt="Last commit" /></a>
   <a href="https://www.rust-lang.org/"><img src="https://img.shields.io/badge/rust-stable-C79A4B?style=flat-square&logo=rust" alt="Rust" /></a>
   <a href="https://www.anchor-lang.com/"><img src="https://img.shields.io/badge/anchor-0.31.1-E8B04B?style=flat-square" alt="Anchor" /></a>
-  <a href="https://solana.com/"><img src="https://img.shields.io/badge/solana-devnet-C9CDD2?style=flat-square&logo=solana" alt="Solana" /></a>
+  <a href="https://solana.com/"><img src="https://img.shields.io/badge/solana-mainnet-C9CDD2?style=flat-square&logo=solana" alt="Solana" /></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/typescript-5.7-C9CDD2?style=flat-square&logo=typescript" alt="TypeScript" /></a>
 </p>
 
@@ -39,9 +39,10 @@ turned the knob, and a glass door clicked open with a dish behind it. Money in,
 door open — which is exactly what `402` is. A machine drops a coin and a machine
 serves a response.
 
-> **Status.** Pre-release. The `otomat-rail` program is deployed to Solana
-> **devnet**; mainnet is targeted for a later milestone. The web app and hosted
-> facilitator are in progress. Nothing here should custody mainnet funds yet.
+> **Status.** The `otomat-rail` settlement program is deployed to Solana
+> **mainnet-beta**; the public interactive demo and hosted facilitator run on
+> **devnet** while the rail is hardened. The mainnet program is freshly deployed
+> and unaudited — verify it yourself before routing real funds through it.
 
 ## Why x402 on Solana
 
@@ -180,9 +181,9 @@ sequenceDiagram
 
 ## Settlement program
 
-`otomat-rail` (program id `FwFC1nDo5r224uXDeTMc2X8FhXuiz9CqBF7tg3trEVhN`) settles
-payments over a single escrow channel and records receipts. Its instruction
-surface:
+`otomat-rail` (program id `FwFC1nDo5r224uXDeTMc2X8FhXuiz9CqBF7tg3trEVhN`) is
+deployed to Solana mainnet-beta. It settles payments over a single escrow channel
+and records receipts. Its instruction surface:
 
 ```rust
 #[program]
@@ -227,7 +228,7 @@ Token and Token-2022. Details in [docs/settlement-spec.md](./docs/settlement-spe
 - [x] `exact` and `otomat-channel` payload builders and 402 client
 - [x] Express / Next / Hono monetization middleware
 - [x] Agent wallet kit spend policies
-- [ ] Mainnet deployment of `otomat-rail`
+- [x] Mainnet deployment of `otomat-rail`
 - [ ] Hosted facilitator and Bazaar discovery index
 - [ ] `otomat-stream` (Token-2022 transfer-hook streaming)
 
