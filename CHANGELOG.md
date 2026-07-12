@@ -6,9 +6,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- The `otomat-rail` settlement program is now deployed to Solana mainnet-beta
+  (program id `FwFC1nDo5r224uXDeTMc2X8FhXuiz9CqBF7tg3trEVhN`). The public
+  interactive demo and hosted facilitator remain on devnet, and the mainnet
+  program is unaudited.
+
 ### Planned
 
-- Mainnet deployment of the `otomat-rail` settlement program.
 - `otomat-stream` scheme (Token-2022 transfer-hook streaming settlement).
 - Public facilitator endpoint and hosted Bazaar discovery index.
 

@@ -1,8 +1,9 @@
 # Security Model
 
 This document describes the trust assumptions, threat model, and known limits of
-the Otomat settlement rail. The program is deployed to devnet and has not been
-audited; see [../SECURITY.md](../SECURITY.md) for reporting.
+the Otomat settlement rail. The program is deployed to Solana mainnet-beta (the
+public interactive demo runs on devnet) and has not been audited; see
+[../SECURITY.md](../SECURITY.md) for reporting.
 
 ## Trust assumptions
 
@@ -67,7 +68,7 @@ tricked into settling a malformed transfer:
 
 ## Known limitations
 
-- **Not audited.** Devnet only. Do not custody mainnet funds.
+- **Not audited.** The mainnet-beta program has not had a formal audit. Do not custody mainnet funds until an audited release is tagged.
 - **Token-2022 extensions.** The program processes standard `TransferChecked`.
   Fee-on-transfer, transfer-hook whitelisting, and confidential-transfer rejection
   are enforced off-chain by the facilitator today; on-chain extension policy is a

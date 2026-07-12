@@ -2,10 +2,11 @@
 
 ## Status
 
-Otomat is pre-production software. The `otomat-rail` program is deployed to
-Solana **devnet** and has **not** been audited. Do not use it to custody
-mainnet funds until an audited release is tagged. Treat every interface here as
-experimental.
+Otomat is pre-production software. The `otomat-rail` settlement program is
+deployed to Solana **mainnet-beta**; the public interactive demo and hosted
+facilitator run on devnet. The mainnet program has **not** been audited — do not
+use it to custody mainnet funds until an audited release is tagged, and treat
+every interface here as experimental.
 
 ## Supported versions
 
