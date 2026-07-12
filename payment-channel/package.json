@@ -1,10 +1,38 @@
 {
   "name": "@otomat/payment-channel",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
+  "description": "Off-chain signed Solana payment channels with on-chain batch settlement for the Otomat x402 rail.",
+  "license": "MIT",
+  "author": "Otomat",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "LICENSE"],
+  "keywords": [
+    "solana",
+    "x402",
+    "payments",
+    "micropayments",
+    "http-402",
+    "payment-channel",
+    "usdc",
+    "agent-payments"
+  ],
+  "homepage": "https://otomat.fun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otomat-fun/otomat.git",
+    "directory": "payment-channel"
+  },
+  "bugs": {
+    "url": "https://github.com/otomat-fun/otomat/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",

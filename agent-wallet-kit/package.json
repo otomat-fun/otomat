@@ -1,10 +1,39 @@
 {
   "name": "@otomat/agent-wallet-kit",
   "version": "0.1.0",
-  "private": true,
+  "description": "Budget and whitelist spend-policy layer over an agent's Solana wallet for x402 micropayments.",
+  "license": "MIT",
+  "author": "Otomat",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "LICENSE"],
+  "keywords": [
+    "solana",
+    "x402",
+    "payments",
+    "micropayments",
+    "agent",
+    "wallet",
+    "spend-policy",
+    "usdc",
+    "ai-agents"
+  ],
+  "homepage": "https://otomat.fun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otomat-fun/otomat.git",
+    "directory": "agent-wallet-kit"
+  },
+  "bugs": {
+    "url": "https://github.com/otomat-fun/otomat/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
