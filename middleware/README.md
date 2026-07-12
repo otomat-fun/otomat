@@ -106,7 +106,7 @@ otomat.express({ price: { amount: '2000', decimals: 6 }, payTo });
 
 ## Framework-agnostic core
 
-The adapters are thin wrappers over an exported engine, so you can wire OTOMAT into any
+The adapters are thin wrappers over an exported engine, so you can wire Otomat into any
 framework:
 
 ```ts
