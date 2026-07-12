@@ -6,8 +6,6 @@
 
 <p><em>Solana's x402 micropayment rail. Insert coin. Receive response.</em></p>
 
-<p><b>English</b> · <a href="./README.ko.md">한국어</a></p>
-
 <p>
   <a href="https://otomat.fun"><img src="https://img.shields.io/badge/website-otomat.fun-C79A4B?style=flat-square" alt="Website" /></a>
   <a href="./docs"><img src="https://img.shields.io/badge/docs-architecture-C79A4B?style=flat-square" alt="Docs" /></a>
