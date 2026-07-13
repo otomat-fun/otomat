@@ -17,7 +17,7 @@ rail on Solana.
 - **Three settlement paths:** cooperative close (`close_channel`), unilateral close
   with a challenge window (`dispute_channel` → `resolve_dispute`), and expiry
   reclaim (`timeout_reclaim`).
-- **Surface:** 8 instructions, 3 account types, 6 events, 17 errors.
+- **Surface:** 8 instructions, 3 account types, 7 events, 18 errors.
 
 ## 2. PDA scheme
 
@@ -79,8 +79,10 @@ and `cumulative_amount <= deposit`. Emits `ChannelClosed`.
 Permissionless — the check signature is the real authority. Submits a
 higher-nonce payer-signed check to open or extend a unilateral close, setting
 `dispute_window_end = now + 120s`. `Open → CloseInitiated`; otherwise `→ Disputed`.
-Requires `status != Closed`, `counter_nonce > channel.nonce`, and
-`counter_cumulative <= deposit`. Emits `ChannelDisputed`.
+Requires `status != Closed`, `counter_nonce > channel.nonce`,
+`counter_cumulative <= deposit`, and
+`counter_cumulative >= channel.cumulative_paid` (a higher-nonce check may not
+settle less than the recorded amount). Emits `ChannelDisputed`.
 
 ### `resolve_dispute()`
 
@@ -92,8 +94,10 @@ recorded `cumulative_paid` to the payee, refunds the payer, and closes. Requires
 ### `timeout_reclaim()`
 
 Payer reclaims the full escrow once the channel has expired without a close.
-Requires `status == Open` and `now >= expiry`. Emits `ChannelClosed` with
-`cumulative = 0`, `refund = deposit`.
+Requires `status == Open` and `now >= expiry`. Emits `ChannelClosed`
+(`cumulative = 0`, `refund = deposit`) and `ChannelReclaimed` (payer, mint,
+refunded amount) so indexers can tell an expiry refund apart from a cooperative
+close or dispute resolution.
 
 ### `commit_receipt(amount, resource_hash, nonce, scheme)`
 
@@ -134,7 +138,11 @@ prevent tampering.
 3. Parse the `Ed25519SignatureOffsets` header and extract the pubkey (32),
    signature (64), and message slices with bounds checks.
 4. Require exactly one signature.
-5. Assert `pubkey == channel.payer`, `signature == argument`, and
+5. Require the `signature`, `public_key`, and `message` instruction indices in the
+   offsets header to all equal `0xffff` (this instruction), so the bytes the native
+   program cryptographically verifies are exactly the bytes parsed here; otherwise a
+   second instruction could carry an attacker-signed tuple (`InvalidSignature`).
+6. Assert `pubkey == channel.payer`, `signature == argument`, and
    `message == build_check_message(..)` (else `InvalidSignature` / `MessageMismatch`).
 
 The native program proves the signature is cryptographically valid; this routine
@@ -167,8 +175,8 @@ stateDiagram-v2
 
 ## 7. Events
 
-`ChannelOpened`, `ChannelClosed`, `ChannelDisputed`, `ReceiptCommitted`,
-`FacilitatorBonded`, `FacilitatorSlashed`.
+`ChannelOpened`, `ChannelClosed`, `ChannelReclaimed`, `ChannelDisputed`,
+`ReceiptCommitted`, `FacilitatorBonded`, `FacilitatorSlashed`.
 
 ## 8. Errors
 
@@ -177,7 +185,7 @@ stateDiagram-v2
 `MissingEd25519Instruction`, `MessageMismatch`, `InvalidTokenProgram`,
 `FacilitatorMismatch`, `GovernanceMismatch`, `BondInsufficient`,
 `BondAlreadyActive`, `DisputeWindowActive`, `InvalidScheme`, `ZeroAmount`,
-`InvalidExpiry`.
+`InvalidExpiry`, `CumulativeRegression`.
 
 ## 9. Design decisions
 

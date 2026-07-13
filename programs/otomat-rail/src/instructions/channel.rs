@@ -8,7 +8,7 @@ use anchor_spl::token_interface::{
 use crate::constants::{CHANNEL_SEED, DISPUTE_WINDOW_SECONDS, ESCROW_AUTH_SEED};
 use crate::ed25519::{build_check_message, verify_ed25519_check};
 use crate::errors::OtomatError;
-use crate::events::{ChannelClosed, ChannelDisputed, ChannelOpened};
+use crate::events::{ChannelClosed, ChannelDisputed, ChannelOpened, ChannelReclaimed};
 use crate::state::{Channel, ChannelStatus};
 
 // ---------------------------------------------------------------------------
@@ -445,7 +445,7 @@ pub fn handle_dispute_channel(
 ) -> Result<()> {
     let channel_key = ctx.accounts.channel.key();
 
-    let (payer_key, expiry, deposit, status, current_nonce) = {
+    let (payer_key, expiry, deposit, status, current_nonce, current_cumulative) = {
         let channel = &ctx.accounts.channel;
         (
             channel.payer,
@@ -453,6 +453,7 @@ pub fn handle_dispute_channel(
             channel.deposit,
             channel.status,
             channel.nonce,
+            channel.cumulative_paid,
         )
     };
 
@@ -469,6 +470,14 @@ pub fn handle_dispute_channel(
     require!(
         counter_cumulative <= deposit,
         OtomatError::CumulativeExceedsDeposit
+    );
+    // A higher-nonce check must never settle *less* to the payee than the amount
+    // already recorded. Legitimate checks only ever accumulate, so this rejects a
+    // malicious payer who signs a fresh high-nonce, low-cumulative check to strip
+    // funds from the payee during the permissionless dispute window.
+    require!(
+        counter_cumulative >= current_cumulative,
+        OtomatError::CumulativeRegression
     );
 
     let message = build_check_message(&channel_key, counter_cumulative, counter_nonce, expiry);
@@ -674,6 +683,8 @@ pub struct TimeoutReclaim<'info> {
 
 pub fn handle_timeout_reclaim(ctx: Context<TimeoutReclaim>) -> Result<()> {
     let channel_key = ctx.accounts.channel.key();
+    let payer_key = ctx.accounts.payer.key();
+    let mint_key = ctx.accounts.mint.key();
 
     let (deposit, cumulative, nonce, expiry, escrow_bump, status) = {
         let channel = &ctx.accounts.channel;
@@ -722,6 +733,13 @@ pub fn handle_timeout_reclaim(ctx: Context<TimeoutReclaim>) -> Result<()> {
         cumulative_paid: cumulative,
         refund,
         nonce,
+    });
+    emit!(ChannelReclaimed {
+        channel: channel_key,
+        payer: payer_key,
+        mint: mint_key,
+        amount: refund,
+        timestamp: now,
     });
     Ok(())
 }

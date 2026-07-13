@@ -34,7 +34,9 @@ payer signed exactly this message.
   instructions-sysvar inspection confirms the verified `(pubkey, message,
   signature)` are the ones it requires. Both checks are necessary — the sysvar
   inspection alone would accept an unrelated verified signature, and the native
-  program alone would not bind the signature to the channel.
+  program alone would not bind the signature to the channel. The offsets header
+  additionally pins the signature, public-key, and message instruction indices to
+  this instruction, so the native program verifies exactly the bytes checked here.
 - `expiry` is taken from the stored channel, not from the caller, which prevents
   a stale check from being replayed after the channel's window.
 

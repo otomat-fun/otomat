@@ -51,3 +51,16 @@ pub struct FacilitatorSlashed {
     pub amount: u64,
     pub reason_hash: [u8; 32],
 }
+
+/// Emitted when a payer reclaims their escrow after the channel expires without
+/// a settlement (`timeout_reclaim`). Complements the generic [`ChannelClosed`]
+/// with reclaim-specific payer, mint, and refunded amount so indexers can tell an
+/// abandonment refund apart from a cooperative close or a dispute resolution.
+#[event]
+pub struct ChannelReclaimed {
+    pub channel: Pubkey,
+    pub payer: Pubkey,
+    pub mint: Pubkey,
+    pub amount: u64,
+    pub timestamp: i64,
+}

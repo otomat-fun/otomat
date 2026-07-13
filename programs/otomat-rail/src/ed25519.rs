@@ -59,12 +59,29 @@ pub fn verify_ed25519_check(
     let read_u16 = |at: usize| -> usize { u16::from_le_bytes([data[at], data[at + 1]]) as usize };
 
     let signature_offset = read_u16(SIGNATURE_OFFSETS_START);
-    // bytes [+2..+4]: signature_instruction_index (0xffff => this instruction)
+    let signature_instruction_index = read_u16(SIGNATURE_OFFSETS_START + 2);
     let pubkey_offset = read_u16(SIGNATURE_OFFSETS_START + 4);
-    // bytes [+6..+8]: public_key_instruction_index
+    let pubkey_instruction_index = read_u16(SIGNATURE_OFFSETS_START + 6);
     let message_offset = read_u16(SIGNATURE_OFFSETS_START + 8);
     let message_size = read_u16(SIGNATURE_OFFSETS_START + 10);
-    // bytes [+12..+14]: message_instruction_index
+    let message_instruction_index = read_u16(SIGNATURE_OFFSETS_START + 12);
+
+    // Each *_instruction_index selects which instruction's data the Ed25519
+    // native program reads the pubkey/message/signature from; `0xffff` means
+    // "this instruction". They MUST all be `0xffff` so the bytes the native
+    // program cryptographically verifies are exactly the bytes parsed below
+    // out of `data`. Otherwise an attacker can point an index at a second
+    // instruction that carries a genuine (attacker-signed) tuple — which the
+    // native program verifies and accepts — while placing the *expected*
+    // payer pubkey/message here for our comparison to read, forging a check
+    // the payer never signed.
+    const THIS_INSTRUCTION_INDEX: usize = 0xffff;
+    require!(
+        signature_instruction_index == THIS_INSTRUCTION_INDEX
+            && pubkey_instruction_index == THIS_INSTRUCTION_INDEX
+            && message_instruction_index == THIS_INSTRUCTION_INDEX,
+        OtomatError::InvalidSignature
+    );
 
     require!(
         pubkey_offset + PUBKEY_SERIALIZED_SIZE <= data.len(),

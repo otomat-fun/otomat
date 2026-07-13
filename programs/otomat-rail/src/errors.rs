@@ -9,6 +9,8 @@ pub enum OtomatError {
     NonceNotIncreasing,
     #[msg("Cumulative amount exceeds the channel deposit")]
     CumulativeExceedsDeposit,
+    #[msg("Counter check cumulative may not fall below the recorded settled amount")]
+    CumulativeRegression,
     #[msg("Channel has already expired")]
     ChannelExpired,
     #[msg("Channel has not yet reached its expiry")]

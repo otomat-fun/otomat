@@ -12,6 +12,14 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   (program id `FwFC1nDo5r224uXDeTMc2X8FhXuiz9CqBF7tg3trEVhN`). The public
   interactive demo and hosted facilitator remain on devnet, and the mainnet
   program is unaudited.
+- `timeout_reclaim` now also emits a `ChannelReclaimed` event (payer, mint,
+  refunded amount, timestamp) so indexers can distinguish an expiry refund from a
+  cooperative close or a dispute resolution.
+- The dispute path now rejects a higher-nonce check whose cumulative amount
+  regresses below the recorded settled amount (`CumulativeRegression`).
+- The Ed25519 offsets header is now required to pin the signature, public-key, and
+  message instruction indices to the settlement instruction, so the native program
+  verifies exactly the check bytes the program parses.
 
 ### Planned
 
